@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+<div style="margin-left: 50px">
+
+<div>
+    <h3>Reception d'un email de contact</h3>
+    <p>
+        une personne veut avoir des information sur la piece
+        <a href="{{ url('property.show',{id: contact.property.id,slug: contact.property.id}) }}">{{ contact.property.title }}</a>
+    </p>
+</div>
+
+<div>
+    <table>
+        <tbody>
+        <tr>
+            <td style="font-weight: bold;font-size: 1rem;">Nom:  </td>
+            <td>{{ contact.lastname }}</td>
+        </tr>
+        <tr>
+            <td style="font-weight: bold;font-size: 1rem;">Prenom:  </td>
+            <td>{{ contact.firstname }}</td>
+        </tr>
+        <tr>
+            <td style="font-weight: bold;font-size: 1rem;">Email:  </td>
+            <td>{{ contact.email }}</td>
+        </tr>
+        <tr>
+            <td style="font-weight: bold;font-size: 1rem;">Message:  </td>
+            <td>{{ contact.message | nl2br}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</div>
+</body>
+</html>

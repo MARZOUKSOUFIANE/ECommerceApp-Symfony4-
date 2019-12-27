@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Gerer les biens' %}
+
+{% block body %}
+    <div class="container mt-4">
+
+        <h1>Liste des biens</h1><br><br>
+
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Titre</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {% for p in properties %}
+                <tr>
+                    <td>{{ p.title }}</td>
+                    <td>
+                        <a href="{{ path('admin.property.edit',{id:p.id}) }}" class="btn btn-secondary btn-sm">Edit <img src="{{ '/images/edit.png' }}" style="height: 20px; width: 20px"></a>
+                        <form method="post" action="{{ path('admin.property.delete',{id:p.id}) }}" style="display: inline-block" onsubmit="return confirm('etes vous vraiment sur?')">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ p.id)}}">
+                            <button class="btn btn-danger btn-sm">Delete <img src="{{ '/images/delete.png' }}" style="height: 20px; width: 20px"></button>
+                        </form>
+                    </td>
+                    
+                </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+        <div class="text-right">
+            <a href="{{ path('admin.property.new') }}" class="btn btn-info">Créer un nouveau bien</a>
+        </div>
+
+        <br>
+
+        {# display navigation #}
+        <div class=" navigation">
+            {{ knp_pagination_render(properties) }}
+        </div>
+
+    </div>
+
+
+{% endblock %}

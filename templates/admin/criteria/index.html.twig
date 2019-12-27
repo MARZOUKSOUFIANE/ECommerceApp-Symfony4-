@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Gerer des options' %}
+
+{% block body %}
+    <div class="container mt-4">
+
+        <h1>Gerer des option</h1>
+
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {% for p in criterias %}
+                <tr>
+                    <td>{{ p.name }}</td>
+                    <td>
+                        <a href="{{ path('admin.criteria.edit',{id:p.id}) }}" class="btn btn-secondary btn-sm">Edit <img src="{{ '/images/edit.png' }}" style="height: 20px; width: 20px"></a>
+                        <form method="post" action="{{ path('admin.criteria.delete',{id:p.id}) }}" style="display: inline-block" onsubmit="return confirm('etes vous vraiment sur?')">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ p.id)}}">
+                            <button class="btn btn-danger btn-sm">Delete <img src="{{ '/images/delete.png' }}" style="height: 20px; width: 20px"></button>
+                        </form>
+                    </td>
+                    
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="text-right">
+            <a href="{{ path('admin.criteria.new') }}" class="btn btn-info">Créer une nouvelle option</a>
+        </div>
+    </div>
+
+
+{% endblock %}

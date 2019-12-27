@@ -1,0 +1,21 @@
+<div class="card mb-4" >
+    {% if p.imageName %}
+        <img src="{{ vich_uploader_asset(p,'imageFile') | imagine_filter('my_thumb') }} " alt="card-img-top" style="height: auto;width: 100%">
+    {% else  %}
+        <img src="{{ '/images/properties/empty.jpg' | imagine_filter('my_thumb') }}" alt="card-img-top" style="height: auto;width: 100%">
+    {% endif %}
+    <div class="card-body">
+
+        <h5 class="card-title">
+            <a href="{{ path('property.show',{slug:p.slug, id:p.id}) }}">
+                {{ p.title }}
+            </a>
+        </h5>
+        <p class="card-text">
+            {{ p.surface }} m2 - {{ p.city }} ({{ p.postalCode }})
+        </p>
+        <div class="text-primary" style="font-size: 2rem; font-weight: bold">
+            {{ p.formattedPrice }} DH
+        </div>
+    </div>
+</div>

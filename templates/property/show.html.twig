@@ -1,0 +1,104 @@
+{% extends 'base.html.twig' %}
+
+{% block title property.title %}
+
+{% block body %}
+
+    <div class="jumbotron">
+        <div class="container">
+
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success">
+                    {{ message }}
+                </div>
+            {% endfor %}
+
+            {% if not form.vars.valid %}
+                <div class="alert alert-danger">
+                    vous avez fait une erreur dans les champs de la formulaire
+                </div>
+            {% endif %}
+            <div class="row">
+            <div class="col-md-8">
+                {% if property.imageName %}
+                    <img src="{{ vich_uploader_asset(property,'imageFile') | imagine_filter('medium') }} " alt="card-img-top" style="width: 100%;height: auto">
+                {% else  %}
+                    <img src="{{ '/images/properties/empty.jpg' | imagine_filter('medium') }}" alt="card-img-top" style="width: 100%;height: auto">
+                {% endif %}
+            </div>
+            <div class="col-md-4">
+                <h1>{{ property.title }}</h1>
+                <h2>{{ property.rooms }} pieces . {{ property.surface }} m2</h2>
+                <div class="text-primary" style="font-weight: bold;font-size: 2rem;">{{ property.formattedPrice }} DH</div>
+                <a href="#" class="btn btn-primary" id="contactButton" {% if form.vars.submitted %}style="display: none" {% endif %}>Contacter l'agence</a>
+                <div id="contactForm" class="mt-4" {% if not form.vars.submitted %}style="display: none" {% endif %}>
+                    {{ form_start(form) }}
+                    <div class="row">
+                        <div class="col">
+                            {{ form_row(form.firstname) }}
+                        </div>
+                        <div class="col">
+                            {{ form_row(form.lastname) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            {{ form_row(form.phone) }}
+                        </div>
+                        <div class="col">
+                            {{ form_row(form.email) }}
+                        </div>
+                    </div>
+                    {{ form_rest(form) }}
+                    <div class="form-group">
+                        <button class="btn btn-primary" type="submit">Envoyer</button>
+                    </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+  <div class="container mt-4">
+    <p style="font-weight: bold;font-size: 1.5rem" class="text-primary">{{ property.description |nl2br}}</p>
+
+    <div class="row">
+        <div class="col-md-8">
+            <h3>Caractéristiques</h3>
+            <table class="table table-striped">
+                <tr>
+                    <td><strong>Surface habitable</strong></td>
+                    <td>{{ property.surface }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Pièces</strong></td>
+                    <td>{{ property.rooms }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Chambres à coucher</strong></td>
+                    <td>{{ property.bedrooms }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Etages</strong></td>
+                    <td>{{ property.floor }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Chauffage</strong></td>
+                    <td>{{ property.heatType }}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-4">
+            <h3>Spécificités</h3>
+            <ul class="list-group col-md-8">
+                {% for option in property.criterias %}
+                    <li class="list-group-item">
+                        {{ option.name }}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+  </div>
+{% endblock %}
